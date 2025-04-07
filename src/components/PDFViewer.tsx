@@ -2,11 +2,22 @@ import { PDFViewerProps } from '../types';
 import { Document, Page } from 'react-pdf';
 import { useState, useCallback, memo, useEffect } from 'react';
 
+/**
+ * PDFViewer component that handles PDF preview and display
+ * 
+ * Key features:
+ * - Creates a new ArrayBuffer for each PDF to prevent detachment issues
+ * - Handles loading and error states
+ * - Provides responsive PDF display
+ * - Optimized with memo and useCallback
+ */
 const PDFViewer = memo(({ document, loading }: PDFViewerProps) => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
 
+  // Create a new ArrayBuffer for each PDF to prevent detachment issues
+  // This is crucial because IndexedDB can detach ArrayBuffers when switching between PDFs
   useEffect(() => {
     if (document?.fileData) {
       try {

@@ -49,14 +49,17 @@ const History = memo(({ onSelectPDF, latestPDF }: HistoryProps) => {
         </div>
       ) : history.length > 0 ? (
         <div className="divide-y divide-gray-100">
-          {history.map((pdf) => (
+          {history.map((pdf, index) => (
             <div
               key={pdf.id}
-              className={`p-4 cursor-pointer transition-all duration-200 relative m-2 rounded-lg border ${
+              className={`p-4 cursor-pointer transition-all duration-300 relative m-2 rounded-lg border transform hover:scale-[1.02] ${
                 selectedPDFId === pdf.id
                   ? 'bg-blue-50 border-blue-300 shadow-sm'
                   : 'bg-white border-gray-200 hover:border-blue-200 hover:shadow-sm'
               }`}
+              style={{
+                animation: `fadeIn 0.3s ease-out ${index * 0.1}s both`
+              }}
               onClick={() => handlePDFClick(pdf)}
             >
               <div className="flex justify-between items-start">
@@ -69,7 +72,7 @@ const History = memo(({ onSelectPDF, latestPDF }: HistoryProps) => {
                   </p>
                 </div>
                 <div className="ml-4 flex items-center">
-                  <span className={`text-xs px-2 py-1 rounded-full ${
+                  <span className={`text-xs px-2 py-1 rounded-full transition-colors duration-200 ${
                     selectedPDFId === pdf.id
                       ? 'bg-blue-100 text-blue-800'
                       : 'bg-gray-100 text-gray-600'
@@ -79,7 +82,7 @@ const History = memo(({ onSelectPDF, latestPDF }: HistoryProps) => {
                 </div>
               </div>
               {selectedPDFId === pdf.id && (
-                <div className="absolute bottom-0 right-0 p-2">
+                <div className="absolute bottom-0 right-0 p-2 animate-fadeIn">
                   <span className="text-xs text-blue-500">Currently viewing</span>
                 </div>
               )}
@@ -87,7 +90,7 @@ const History = memo(({ onSelectPDF, latestPDF }: HistoryProps) => {
           ))}
         </div>
       ) : (
-        <div className="p-8 text-center text-gray-500">
+        <div className="p-8 text-center text-gray-500 animate-fadeIn">
           <svg
             className="mx-auto h-12 w-12 text-gray-400"
             fill="none"
